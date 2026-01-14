@@ -1,6 +1,11 @@
 # What is it?
 
-ModerationBot is a Telegram bot that helps moderate messages.
+ModerationBot is a Telegram bot that helps **moderate messages**.
+
+# How does it work?
+
+The user sends a message to the bot. After that, it is sent to the administrator for moderation. If the administrator
+approves it, the message is posted on the Telegram channel. If not, then it is not.
 
 # Quick Start
 
@@ -38,16 +43,15 @@ npm run bot
 
 # Technology
 
-The following technologies are used to develop the bot: _JavaScript_ and _Node.js_.
+The following technologies are used to develop the bot: **JavaScript** and **Node.js**.
 
 # Bot hosting
 
-The code contains the comments ONLY FOR RENDER. If you use a different hosting method, just delete that code.
-
+The code contains the comments **ONLY FOR RENDER**. If you use a different hosting method, just delete that code.
 Otherwise, if you want to host a Telegram bot for free, you don't need to delete the code. How does it work and why?
 
-1. Connect your repository with this code (or your own) to Render as a Web Service. Only there is a free plan. Also,
-   without this code, Render will not allow you to build the project because it needs to listen to the port.
+1. Connect your repository with this code (or your own) to **Render** as a **Web Service**. Only there is a free plan.
+   Also, without this code, Render will not allow you to build the project because it needs to listen to the port.
 
-2. Next, copy the link provided by Render and leave it on the UptimeRobot website. Also, don't forget to set it to check
-   our website every 14 minutes. This is important to prevent our bot from falling sleep.
+2. Next, copy the link provided by Render and leave it on the **UptimeRobot** website. Also, don't forget to set it to
+   check our website every **14 minutes**. This is important to prevent our bot from falling sleep.
