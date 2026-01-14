@@ -41,7 +41,7 @@ CHANNEL_ID="For example @channel"
 npm run bot
 ```
 
-# Technology
+# Tech stack
 
 The following technologies are used to develop the bot: **JavaScript** and **Node.js**.
 
