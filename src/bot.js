@@ -2,15 +2,15 @@ import dotenv from 'dotenv';
 import { Telegraf } from 'telegraf';
 import express from 'express'; //! ONLY FOR RENDER (https://render.com)
 
-dotenv.config({ quiet: true });
-
 const BOT_TOKEN = process.env.BOT_TOKEN;
 const ADMIN_ID = process.env.ADMIN_ID;
 const CHANNEL_ID = process.env.CHANNEL_ID;
 
 const bot = new Telegraf(BOT_TOKEN);
+dotenv.config({ quiet: true });
 
 bot.start((ctx) => ctx.reply('Hi, I am a moderation bot'));
+bot.help((ctx) => ctx.reply('Send me a message and I will send it for moderation'));
 
 bot.on('message', async (ctx) => {
 	if (ctx.from.id == ADMIN_ID) {
@@ -37,7 +37,7 @@ bot.on('message', async (ctx) => {
 bot.action(/approve\|(.+)\|(.+)\|(.+)/, async (ctx) => {
 	let chatId = ctx.match[1];
 	let messageId = ctx.match[2];
-	let messageText = ctx.match[3] + '\n\nAPPROVED';
+	let messageText = ctx.match[3] + '\n\n✅ APPROVED';
 
 	await ctx.telegram.copyMessage(CHANNEL_ID, chatId, messageId);
 
@@ -45,7 +45,7 @@ bot.action(/approve\|(.+)\|(.+)\|(.+)/, async (ctx) => {
 });
 
 bot.action(/reject\|(.+)/, async (ctx) => {
-	let messageText = ctx.match[1] + '\n\nREJECTED';
+	let messageText = ctx.match[1] + '\n\n❌ REJECTED';
 
 	await ctx.editMessageText(messageText);
 });
