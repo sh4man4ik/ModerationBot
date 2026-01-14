@@ -1,13 +1,14 @@
 # What is it?
 
-ModerationBot is a Telegram bot that helps **moderate messages**.
+ModerationBot is a Telegram bot that helps **moderate messages**. This is the initial code base that you can improve and
+modify to suit your needs.
 
 # How does it work?
 
 The user sends a message to the bot. After that, it is sent to the administrator for moderation. If the administrator
 approves it, the message is posted on the Telegram channel. If not, then it is not.
 
-# Quick Start
+# Source code
 
 1. Clone the repository:
 
