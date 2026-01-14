@@ -6,7 +6,8 @@ modify to suit your needs.
 # How does it work?
 
 The user sends a message to the bot. After that, it is sent to the administrator for moderation. If the administrator
-approves it, the message is posted on the Telegram channel. If not, then it is not.
+approves it, the message is posted on the Telegram channel. If not, then it is not. Make sure that the bot is added to
+the Telegram channel as administrator.
 
 # Source code
 
