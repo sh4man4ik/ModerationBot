@@ -2,12 +2,13 @@ import dotenv from 'dotenv';
 import { Telegraf } from 'telegraf';
 import express from 'express'; //! ONLY FOR RENDER (https://render.com)
 
+dotenv.config({ quiet: true });
+
 const BOT_TOKEN = process.env.BOT_TOKEN;
 const ADMIN_ID = process.env.ADMIN_ID;
 const CHANNEL_ID = process.env.CHANNEL_ID;
 
 const bot = new Telegraf(BOT_TOKEN);
-dotenv.config({ quiet: true });
 
 bot.start((ctx) => ctx.reply('Hi, I am a moderation bot'));
 bot.help((ctx) => ctx.reply('Send me a message and I will send it for moderation'));
