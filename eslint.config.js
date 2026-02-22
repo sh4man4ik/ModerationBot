@@ -9,7 +9,6 @@ export default [
 			ecmaVersion: 'latest',
 			sourceType: 'module',
 			globals: {
-				...globals.jest,
 				...globals.browser,
 				...globals.node,
 				ObjectId: 'readonly',
