@@ -5,6 +5,7 @@ const TEXTS = {
 	},
 
 	moderation: {
+		unsubmitted: 'Only text, photo and video are allowed',
 		submitted: 'Your message has been sent for moderation',
 
 		buttons: {

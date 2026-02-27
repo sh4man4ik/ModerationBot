@@ -15,22 +15,32 @@ bot.start((ctx) => ctx.reply(`${getText('commands.start')}`));
 bot.help((ctx) => ctx.reply(`${getText('commands.help')}`));
 
 bot.on('message', async (ctx) => {
-	// if (ctx.from.id == ADMIN_ID) {
-	// 	return;
-	// }
+	if (ctx.from.id == ADMIN_ID) {
+		return;
+	}
 
-	ctx.reply(`${getText('moderation.submitted')}`);
+	if (!ctx.message.text && !ctx.message.photo && !ctx.message.video) {
+		await ctx.reply(getText('moderation.unsubmitted'));
+		return;
+	}
+
+	await ctx.reply(getText('moderation.submitted'));
 
 	await ctx.telegram.copyMessage(ADMIN_ID, ctx.chat.id, ctx.message.message_id, {
 		reply_markup: {
 			inline_keyboard: [
 				[
 					{
-						text: `${getText('moderation.buttons.approve')}`,
-						callback_data: `approve|${ctx.chat.id}|${ctx.message.message_id}|${ctx.message.text}`
+						text: getText('moderation.buttons.approve'),
+						callback_data: `approve|${ctx.chat.id}|${ctx.message.message_id}|${ctx.message.text || ctx.message.caption}`
 					}
 				],
-				[{ text: `${getText('moderation.buttons.reject')}`, callback_data: `reject|${ctx.message.text}` }]
+				[
+					{
+						text: getText('moderation.buttons.reject'),
+						callback_data: `reject|${ctx.message.text || ctx.message.caption}`
+					}
+				]
 			]
 		}
 	});
@@ -39,17 +49,27 @@ bot.on('message', async (ctx) => {
 bot.action(/approve\|(.+)\|(.+)\|(.+)/, async (ctx) => {
 	let chatId = ctx.match[1];
 	let messageId = ctx.match[2];
-	let messageText = ctx.match[3] + `\n\n${getText('moderation.result.approved')}`;
+	let messageText = `${ctx.match[3] != 'undefined' ? ctx.match[3] : ''}\n\n${getText('moderation.result.approved')}`;
 
 	await ctx.telegram.copyMessage(CHANNEL_ID, chatId, messageId);
 
-	await ctx.editMessageText(messageText);
+	if (ctx.callbackQuery.message.text) {
+		await ctx.editMessageText(messageText);
+	} else {
+		await ctx.editMessageReplyMarkup({ inline_keyboard: [] });
+		await ctx.editMessageCaption(messageText);
+	}
 });
 
 bot.action(/reject\|(.+)/, async (ctx) => {
-	let messageText = ctx.match[1] + `\n\n${getText('moderation.result.rejected')}`;
+	let messageText = `${ctx.match[1] != 'undefined' ? ctx.match[1] : ''}\n\n${getText('moderation.result.rejected')}`;
 
-	await ctx.editMessageText(messageText);
+	if (ctx.callbackQuery.message.text) {
+		await ctx.editMessageText(messageText);
+	} else {
+		await ctx.editMessageReplyMarkup({ inline_keyboard: [] });
+		await ctx.editMessageCaption(messageText);
+	}
 });
 
 bot.launch();
