@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import { Telegraf } from 'telegraf';
 import express from 'express'; //! ONLY FOR RENDER (https://render.com)
+import getText from './texts.js';
 
 dotenv.config({ quiet: true });
 
@@ -10,26 +11,26 @@ const CHANNEL_ID = process.env.CHANNEL_ID;
 
 const bot = new Telegraf(BOT_TOKEN);
 
-bot.start((ctx) => ctx.reply('Hi, I am a moderation bot'));
-bot.help((ctx) => ctx.reply('Send me a message and I will send it for moderation'));
+bot.start((ctx) => ctx.reply(`${getText('commands.start')}`));
+bot.help((ctx) => ctx.reply(`${getText('commands.help')}`));
 
 bot.on('message', async (ctx) => {
-	if (ctx.from.id == ADMIN_ID) {
-		return;
-	}
+	// if (ctx.from.id == ADMIN_ID) {
+	// 	return;
+	// }
 
-	ctx.reply('Your message has been sent for moderation');
+	ctx.reply(`${getText('moderation.submitted')}`);
 
 	await ctx.telegram.copyMessage(ADMIN_ID, ctx.chat.id, ctx.message.message_id, {
 		reply_markup: {
 			inline_keyboard: [
 				[
 					{
-						text: 'APPROVE',
+						text: `${getText('moderation.buttons.approve')}`,
 						callback_data: `approve|${ctx.chat.id}|${ctx.message.message_id}|${ctx.message.text}`
 					}
 				],
-				[{ text: 'REJECT', callback_data: `reject|${ctx.message.text}` }]
+				[{ text: `${getText('moderation.buttons.reject')}`, callback_data: `reject|${ctx.message.text}` }]
 			]
 		}
 	});
@@ -38,7 +39,7 @@ bot.on('message', async (ctx) => {
 bot.action(/approve\|(.+)\|(.+)\|(.+)/, async (ctx) => {
 	let chatId = ctx.match[1];
 	let messageId = ctx.match[2];
-	let messageText = ctx.match[3] + '\n\n✅ APPROVED';
+	let messageText = ctx.match[3] + `\n\n${getText('moderation.result.approved')}`;
 
 	await ctx.telegram.copyMessage(CHANNEL_ID, chatId, messageId);
 
@@ -46,7 +47,7 @@ bot.action(/approve\|(.+)\|(.+)\|(.+)/, async (ctx) => {
 });
 
 bot.action(/reject\|(.+)/, async (ctx) => {
-	let messageText = ctx.match[1] + '\n\n❌ REJECTED';
+	let messageText = ctx.match[1] + `\n\n${getText('moderation.result.rejected')}`;
 
 	await ctx.editMessageText(messageText);
 });
