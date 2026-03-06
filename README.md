@@ -5,7 +5,7 @@
 # What is it?
 
 ModerationBot is a Telegram bot that helps **moderate messages**. This is the initial code base that you can improve and
-modify to suit your needs.
+modify to suit your needs. The bot supports video, photo, and text messages.
 
 # How does it work?
 
