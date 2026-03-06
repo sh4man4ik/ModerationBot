@@ -1,3 +1,7 @@
+# ModerationBot
+
+<video src="https://github.com/user-attachments/assets/b78f8d45-1a80-46a9-8846-5e7afce805ee"></video>
+
 # What is it?
 
 ModerationBot is a Telegram bot that helps **moderate messages**. This is the initial code base that you can improve and
